@@ -3,13 +3,18 @@ import json
 students = {}
 
 def add_student ( students , name ):
-
-    students[name] = []
-    print(f"Student {name} has been added.")
+    if name in students:
+        print(f"Student {name} already exists.")
+    else:
+        students[name] = []
+        print(f"Student {name} has been added.")
 
 def add_grade ( students , name , grade ):
-    students[name].append(grade)
-    print(f"The grade {grade} has been added to {name}'s list")
+    if name in students:
+        students[name].append(grade)
+        print(f"The grade {grade} has been added to {name}'s list")
+    else:
+        print(f"The student {name} has not been yet added.")
 
 def average ( students , name ):
 
