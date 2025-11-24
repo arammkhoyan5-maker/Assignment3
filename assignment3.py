@@ -78,6 +78,13 @@ class StudentManager:
         for i, (name, average) in enumerate(sorted_students[:3]):
             print(f"{i + 1}. {name}: {average}")
 
+    def delete_student(self,name):
+        if name in self.students:
+            del self.students[name]
+            print(f"Student {name} and their grades gave been deleted.")
+        else:
+            print(f"Student {name} not found.")
+
     print("1. Add student\n"
           "2. Add grade\n"
           "3. Show average for student\n"
