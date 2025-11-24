@@ -1,4 +1,6 @@
 import json
+from pathlib import Path
+
 
 students = {}
 
@@ -34,11 +36,13 @@ def save_to_file(students, filename):
         print("The file has been successfully saved")
 
 def load_from_file ( filename ) :
-
-    with open(filename,"r") as file:
-        loaded_students = json.load(file)
-        students.update(loaded_students)
-        print("The file has been successfully loaded")
+    if Path(filename).exists():
+        with open(filename,"r") as file:
+            loaded_students = json.load(file)
+            students.update(loaded_students)
+            print("The file has been successfully loaded")
+    else:
+        print("The file does not exist.")
 
 
 print("1. Add student\n"
