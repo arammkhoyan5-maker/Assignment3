@@ -1,3 +1,4 @@
+import os
 import json
 from pathlib import Path
 
@@ -34,21 +35,34 @@ class StudentManager:
 
     def save_to_file(students, filename):
 
+        if not filename.endswith('.json'):
+            filename = os.path.splitext(filename)[0] + '.json'
+
         with open(filename,"w") as file:
             json.dump(students,file)
-            print("The file has been successfully saved")
+            print("The file has been successfully saved with .json format")
 
-    def load_from_file (students,filename) :
+    def load_from_file(self, filename):
+        # Check if the file exists
         if Path(filename).exists():
-            with open(filename,"r") as file:
-                loaded_students = json.load(file)
-                students.update(loaded_students)
-                print("The file has been successfully loaded")
+            # Check if the file is a JSON file
+            if os.path.splitext(filename)[1] != ".json":
+                print("Please choose a file with .json format.")
+                return
+
+            # Try to load the JSON data
+            try:
+                with open(filename, "r") as file:
+                    loaded_students = json.load(file)
+                    self.students.update(loaded_students)
+                    print("The file has been successfully loaded.")
+            except json.JSONDecodeError:
+                print("Error: The file is not in valid JSON format.")
         else:
             print("The file does not exist.")
 
     def top3(students):
-        # Create a dictionary to store averages
+
         students_average = {}
 
         for name, grades in students.items():
@@ -56,10 +70,10 @@ class StudentManager:
                 average = sum(grades) / len(grades)
                 students_average[name] = average
 
-        # Sort the students by average in descending order using sorted
+
         sorted_students = sorted(students_average.items(), key=lambda x: x[1], reverse=True)
 
-        # Display the top 3 students
+
         print("Top 3 students by average grade:")
         for i, (name, average) in enumerate(sorted_students[:3]):
             print(f"{i + 1}. {name}: {average}")
