@@ -27,7 +27,7 @@ class StudentManager:
         students_average = sum(students[name])/ grades_count
         print(f"The average of {name} is {students_average}")
 
-    def show_all(self):
+    def show_all(students):
         for name in students.keys():
             print(f"{name}: {students[name]}")
 
@@ -38,7 +38,7 @@ class StudentManager:
             json.dump(students,file)
             print("The file has been successfully saved")
 
-    def load_from_file ( filename ) :
+    def load_from_file (students,filename) :
         if Path(filename).exists():
             with open(filename,"r") as file:
                 loaded_students = json.load(file)
@@ -99,7 +99,7 @@ class StudentManager:
 
         elif choice == 6:
             filename = str(input("Enter the file name :"))
-            load_from_file(filename)
+            load_from_file(students,filename)
 
         elif choice == 7:
             top3(students)
